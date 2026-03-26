@@ -34,4 +34,14 @@ public class GameService
     {
         return await _context.Games.Where(g => g.UserId == userId).ToListAsync();
     }
+
+    public async Task DeleteGame(int gameId, int userId)
+    {
+        var game = await _context.Games.FirstOrDefaultAsync(g => g.Id == gameId && g.UserId == userId);
+        if (game != null)
+        {
+            _context.Games.Remove(game);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

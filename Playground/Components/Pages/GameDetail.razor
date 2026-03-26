@@ -1,8 +1,12 @@
 @page "/game/{id:int}"
 @rendermode InteractiveServer
 @using Playground.Models
+@using Microsoft.AspNetCore.Components.Authorization
 @using Playground.Services
 @inject GameService GameService
+@inject AuthenticationStateProvider AuthProvider
+@inject NavigationManager Navigation
+@inject IJSRuntime JsRuntime
 
 @if (game == null)
 {
@@ -50,15 +54,44 @@ else
                 }
             </div>
         </div>
+        
+        @if (isAuthor)
+        {
+            <div>
+                <button class="btn btn-danger" @onclick="DeleteGame">Удалить игру</button>
+            </div>
+        }
     </div>
 }
 
 @code {
     [Parameter] public int Id { get; set; }
     private Game? game;
+    private bool isAuthor = false;
+    private int currentUserId;
 
     protected override async Task OnInitializedAsync()
     {
         game = await GameService.GetGameById(Id);
+        if (game != null)
+        {
+            var authState = await AuthProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            var userIdClaim = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out currentUserId))
+            {
+                isAuthor = game.UserId == currentUserId;
+            }
+        }
+    }
+    
+    private async Task DeleteGame()
+    {
+        var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Вы уверены, что хотите удалить эту игру?");
+        if (confirmed)
+        {
+            await GameService.DeleteGame(Id, currentUserId);
+            Navigation.NavigateTo("/games");
+        }
     }
 }

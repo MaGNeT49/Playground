@@ -6,6 +6,7 @@
 @using Playground.Services
 @inject GameService GameService
 @inject AuthenticationStateProvider AuthProvider
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Мои игры</PageTitle>
 
@@ -30,7 +31,28 @@ else
                     <img src="@game.CoverUrl" class="card-img-top" alt="@game.Title">
                     <div class="card-body">
                         <h5 class="card-title">@game.Title</h5>
-                        <NavLink href="@($"/game/{game.Id}")" class="btn btn-primary stretched-link">Подробнее</NavLink>
+                        <p class="card-text">Автор: @game.Author</p>
+                        <div class="tags mb-2">
+                            @foreach (var tag in game.Tags)
+                            {
+                                <span class="badge bg-secondary me-1">@tag</span>
+                            }
+                        </div>
+                        <div class="game-type-badge">
+                            @if (game.Type == GameType.Browser)
+                            {
+                                <span class="badge bg-success">Браузерная</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-info">Билд</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-flex gap-2">
+                            <NavLink href="@($"/game/{game.Id}")" class="btn btn-primary stretched-link">Подробнее</NavLink>
+                        </div>
                     </div>
                 </div>
             </div>
