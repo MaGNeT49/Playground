@@ -96,3 +96,45 @@ main {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.top-row {
+    background-color: #1e1e2f;
+    border-bottom: 1px solid #2a2a3a;
+    justify-content: space-between;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: #2a2a3a;
+    border-radius: 20px;
+    padding: 0.25rem 0.75rem;
+    width: 300px;
+}
+
+.search-bar i {
+    color: #aaa;
+    margin-right: 0.5rem;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    width: 100%;
+}
+
+.user-area {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.footer {
+    background-color: #1a1a2a;
+    border-top: 1px solid #2a2a3a;
+    font-size: 0.9rem;
+}

@@ -1,0 +1,67 @@
+@page "/games"
+@rendermode InteractiveServer
+@using Playground.Models
+@using Playground.Services
+@inject GameService GameService
+
+<PageTitle>Все игры</PageTitle>
+
+<h1 class="mb-4">Все игры</h1>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @if (games == null)
+    {
+        <div class="col-12 text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Загрузка...</span>
+            </div>
+        </div>
+    }
+    else
+    {
+        @foreach (var game in games)
+        {
+            <div class="col">
+                <div class="card game-card h-100">
+                    <img src="@game.CoverUrl" class="card-img-top" alt="@game.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@game.Title</h5>
+                        <p class="card-text">Автор: @game.Author</p>
+                        <p class="card-text small">@(game.Description.Length > 100 ? game.Description[..100] + "..." : game.Description)</p>
+                        <div class="tags mb-2">
+                            @foreach (var tag in game.Tags)
+                            {
+                                <span class="badge bg-secondary me-1">@tag</span>
+                            }
+                        </div>
+                        <div class="game-type-badge">
+                            @if (game.Type == GameType.Browser)
+                            {
+                                <span class="badge bg-success">Браузерная</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-info">Билд</span>
+                            }
+                        </div>
+                        <NavLink href="@($"/game/{game.Id}")" class="stretched-link"/>
+                    </div>
+                    <div class="card-footer bg-transparent border-top-0">
+                        <NavLink href="@($"/game/{game.Id}")" class="btn btn-primary w-100">
+                            @(game.Type == GameType.Browser ? "Играть" : "Скачать")
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private List<Game>? games;
+
+    protected override async Task OnInitializedAsync()
+    {
+        games = await GameService.GetAllGames();
+    }
+}

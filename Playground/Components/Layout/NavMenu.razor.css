@@ -103,3 +103,9 @@
         overflow-y: auto;
     }
 }
+/* Убираем старые SVG-фоны, используем Bootstrap Icons */
+.bi {
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+    vertical-align: middle;
+}

@@ -1,0 +1,64 @@
+@page "/game/{id:int}"
+@rendermode InteractiveServer
+@using Playground.Models
+@using Playground.Services
+@inject GameService GameService
+
+@if (game == null)
+{
+    <div class="alert alert-warning">Игра не найдена</div>
+}
+else
+{
+    <div class="game-detail">
+        @if (!string.IsNullOrEmpty(game.BannerUrl))
+        {
+            <img src="@game.BannerUrl" class="img-fluid banner" alt="@game.Title">
+        }
+        <div class="game-header mt-4">
+            <h1>@game.Title</h1>
+            <p class="text-muted">Автор: @game.Author | Опубликовано: @game.UploadedAt.ToShortDateString()</p>
+            <div class="tags mb-3">
+                @foreach (var tag in game.Tags)
+                {
+                    <span class="badge bg-secondary me-1">@tag</span>
+                }
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <h3>Описание</h3>
+                <p>@game.Description</p>
+
+                @if (game.Type == GameType.Browser && !string.IsNullOrEmpty(game.PlayUrl))
+                {
+                    <h3>Играть онлайн</h3>
+                    <div class="game-iframe-container">
+                        <iframe src="@game.PlayUrl" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                }
+                else if (game.Type == GameType.Build && !string.IsNullOrEmpty(game.DownloadUrl))
+                {
+                    <a href="@game.DownloadUrl" class="btn btn-success btn-lg" download>Скачать билд</a>
+                }
+            </div>
+            <div class="col-md-4">
+                @if (!string.IsNullOrEmpty(game.CoverUrl))
+                {
+                    <img src="@game.CoverUrl" class="img-fluid rounded shadow-sm" alt="@game.Title">
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+    private Game? game;
+
+    protected override async Task OnInitializedAsync()
+    {
+        game = await GameService.GetGameById(Id);
+    }
+}

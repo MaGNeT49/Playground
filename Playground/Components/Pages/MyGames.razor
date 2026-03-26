@@ -1,0 +1,61 @@
+@page "/my-games"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Playground.Models
+@using Playground.Services
+@inject GameService GameService
+@inject AuthenticationStateProvider AuthProvider
+
+<PageTitle>Мои игры</PageTitle>
+
+<h1>Мои игры</h1>
+
+@if (games == null)
+{
+    <div class="spinner-border"></div>
+}
+else if (!games.Any())
+{
+    <p>Вы ещё не загрузили ни одной игры.</p>
+    <a href="/upload" class="btn btn-primary">Загрузить игру</a>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var game in games)
+        {
+            <div class="col">
+                <div class="card game-card h-100">
+                    <img src="@game.CoverUrl" class="card-img-top" alt="@game.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@game.Title</h5>
+                        <NavLink href="@($"/game/{game.Id}")" class="btn btn-primary stretched-link">Подробнее</NavLink>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Game>? games;
+    private int userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userIdClaim = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+
+        if (userIdClaim != null)
+        {
+            userId = int.Parse(userIdClaim.Value);
+            games = await GameService.GetGamesByUserId(userId);
+        }
+        else
+        {
+            games = new List<Game>();
+        }
+    }
+}

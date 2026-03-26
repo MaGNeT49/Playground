@@ -1,18 +1,42 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager Navigation
 
 <div class="page">
     <div class="sidebar">
-        <NavMenu/>
+        <NavMenu />
     </div>
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            <div class="search-bar">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Поиск игр..." />
+            </div>
+            <div class="user-area">
+                @if (isAuthenticated)
+                {
+                    <span class="text-light me-2">Привет, @userName!</span>
+                    <a href="Account/Logout" class="btn btn-outline-light btn-sm">Выйти</a>
+                }
+                else
+                {
+                    <a href="Account/Login" class="btn btn-outline-light btn-sm">Войти</a>
+                    <a href="Account/Register" class="btn btn-primary btn-sm">Регистрация</a>
+                }
+            </div>
         </div>
 
         <article class="content px-4">
             @Body
         </article>
+
+        <footer class="footer mt-auto py-3 text-center">
+            <div class="container">
+                <span class="text-muted">© 2026 Playground — площадка для игр</span>
+            </div>
+        </footer>
     </main>
 </div>
 
@@ -21,3 +45,16 @@
     <a href="." class="reload">Reload</a>
     <span class="dismiss">🗙</span>
 </div>
+
+@code {
+    private bool isAuthenticated;
+    private string? userName;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        isAuthenticated = user.Identity?.IsAuthenticated ?? false;
+        userName = user.Identity?.Name;
+    }
+}

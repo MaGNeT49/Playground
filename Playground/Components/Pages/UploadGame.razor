@@ -1,0 +1,101 @@
+@page "/upload"
+@attribute [Authorize]
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@using Playground.Models
+@using Playground.Services
+@inject GameService GameService
+@inject NavigationManager Navigation
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Загрузить игру</PageTitle>
+
+<h1>Загрузить новую игру</h1>
+
+<EditForm Model="@newGame" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary class="alert alert-danger" />
+
+    <div class="mb-3">
+        <label for="title" class="form-label">Название игры</label>
+        <InputText id="title" class="form-control" @bind-Value="newGame.Title" />
+        <ValidationMessage For="@(() => newGame.Title)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="author" class="form-label">Автор</label>
+        <InputText id="author" class="form-control" @bind-Value="newGame.Author" />
+        <ValidationMessage For="@(() => newGame.Author)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="description" class="form-label">Описание</label>
+        <InputTextArea id="description" class="form-control" rows="5" @bind-Value="newGame.Description" />
+        <ValidationMessage For="@(() => newGame.Description)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="type" class="form-label">Тип игры</label>
+        <InputSelect id="type" class="form-select" @bind-Value="newGame.Type">
+            <option value="@GameType.Browser">Браузерная</option>
+            <option value="@GameType.Build">Билд (скачиваемый)</option>
+        </InputSelect>
+    </div>
+
+    <div class="mb-3">
+        <label for="url" class="form-label">
+            @(newGame.Type == GameType.Browser ? "URL для iframe" : "Ссылка на скачивание")
+        </label>
+        <InputText id="url" class="form-control" @bind-Value="gameUrl" />
+        <div class="form-text">
+            @(newGame.Type == GameType.Browser ? "Введите URL, где размещена игра (WebGL/HTML)" : "Прямая ссылка на ZIP-архив")
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label for="cover" class="form-label">URL обложки</label>
+        <InputText id="cover" class="form-control" @bind-Value="newGame.CoverUrl" />
+    </div>
+
+    <div class="mb-3">
+        <label for="tags" class="form-label">Теги (через запятую)</label>
+        <InputText id="tags" class="form-control" @bind-Value="tagsInput" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Загрузить</button>
+</EditForm>
+
+@code {
+    private Game newGame = new();
+    private string gameUrl = "";
+    private string tagsInput = "";
+    private int userId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+        var userIdClaim = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+        if (userIdClaim != null)
+        {
+            userId = int.Parse(userIdClaim.Value);
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        // заполнение полей newGame
+        if (newGame.Type == GameType.Browser)
+            newGame.PlayUrl = gameUrl;
+        else
+            newGame.DownloadUrl = gameUrl;
+        
+        newGame.Tags = tagsInput.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                 .Select(t => t.Trim())
+                                 .ToList();
+
+        await GameService.AddGame(newGame, userId);
+        Navigation.NavigateTo("/my-games");
+    }
+}
