@@ -8,22 +8,22 @@
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
 
-@if (game == null)
+@if (_game == null)
 {
     <div class="alert alert-warning">Игра не найдена</div>
 }
 else
 {
     <div class="game-detail">
-        @if (!string.IsNullOrEmpty(game.BannerUrl))
+        @if (!string.IsNullOrEmpty(_game.BannerUrl))
         {
-            <img src="@game.BannerUrl" class="img-fluid banner" alt="@game.Title">
+            <img src="@_game.BannerUrl" class="img-fluid banner" alt="@_game.Title">
         }
         <div class="game-header mt-4">
-            <h1>@game.Title</h1>
-            <p class="text-muted">Автор: @game.Author | Опубликовано: @game.UploadedAt.ToShortDateString()</p>
+            <h1>@_game.Title</h1>
+            <p class="text-muted">Автор: @_game.Author | Опубликовано: @_game.UploadedAt.ToShortDateString()</p>
             <div class="tags mb-3">
-                @foreach (var tag in game.Tags)
+                @foreach (var tag in _game.Tags)
                 {
                     <span class="badge bg-secondary me-1">@tag</span>
                 }
@@ -33,29 +33,29 @@ else
         <div class="row">
             <div class="col-md-8">
                 <h3>Описание</h3>
-                <p>@game.Description</p>
+                <p>@_game.Description</p>
 
-                @if (game.Type == GameType.Browser && !string.IsNullOrEmpty(game.PlayUrl))
+                @if (_game.Type == GameType.Browser && !string.IsNullOrEmpty(_game.PlayUrl))
                 {
                     <h3>Играть онлайн</h3>
                     <div class="game-iframe-container">
-                        <iframe src="@game.PlayUrl" frameborder="0" allowfullscreen></iframe>
+                        <iframe src="@_game.PlayUrl" frameborder="0" allowfullscreen></iframe>
                     </div>
                 }
-                else if (game.Type == GameType.Build && !string.IsNullOrEmpty(game.DownloadUrl))
+                else if (_game.Type == GameType.Build && !string.IsNullOrEmpty(_game.DownloadUrl))
                 {
-                    <a href="@game.DownloadUrl" class="btn btn-success btn-lg" download>Скачать билд</a>
+                    <a href="@_game.DownloadUrl" class="btn btn-success btn-lg" download>Скачать билд</a>
                 }
             </div>
             <div class="col-md-4">
-                @if (!string.IsNullOrEmpty(game.CoverUrl))
+                @if (!string.IsNullOrEmpty(_game.CoverUrl))
                 {
-                    <img src="@game.CoverUrl" class="img-fluid rounded shadow-sm" alt="@game.Title">
+                    <img src="@_game.CoverUrl" class="img-fluid rounded shadow-sm" alt="@_game.Title">
                 }
             </div>
         </div>
         
-        @if (isAuthor)
+        @if (_isAuthor)
         {
             <div>
                 <button class="btn btn-danger" @onclick="DeleteGame">Удалить игру</button>
@@ -66,21 +66,21 @@ else
 
 @code {
     [Parameter] public int Id { get; set; }
-    private Game? game;
-    private bool isAuthor = false;
-    private int currentUserId;
+    private Game? _game;
+    private bool _isAuthor = false;
+    private int _currentUserId;
 
     protected override async Task OnInitializedAsync()
     {
-        game = await GameService.GetGameById(Id);
-        if (game != null)
+        _game = await GameService.GetGameById(Id);
+        if (_game != null)
         {
             var authState = await AuthProvider.GetAuthenticationStateAsync();
             var user = authState.User;
             var userIdClaim = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out currentUserId))
+            if (userIdClaim != null && int.TryParse(userIdClaim.Value, out _currentUserId))
             {
-                isAuthor = game.UserId == currentUserId;
+                _isAuthor = _game.UserId == _currentUserId;
             }
         }
     }
@@ -90,7 +90,7 @@ else
         var confirmed = await JsRuntime.InvokeAsync<bool>("confirm", "Вы уверены, что хотите удалить эту игру?");
         if (confirmed)
         {
-            await GameService.DeleteGame(Id, currentUserId);
+            await GameService.DeleteGame(Id, _currentUserId);
             Navigation.NavigateTo("/games");
         }
     }

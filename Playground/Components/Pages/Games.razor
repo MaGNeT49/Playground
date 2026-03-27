@@ -9,7 +9,7 @@
 <h1 class="mb-4">Все игры</h1>
 
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    @if (games == null)
+    @if (_games == null)
     {
         <div class="col-12 text-center">
             <div class="spinner-border text-primary" role="status">
@@ -19,7 +19,7 @@
     }
     else
     {
-        @foreach (var game in games)
+        @foreach (var game in _games)
         {
             <div class="col">
                 <div class="card game-card h-100">
@@ -48,7 +48,7 @@
                     </div>
                     <div class="card-footer bg-transparent border-top-0">
                         <NavLink href="@($"/game/{game.Id}")" class="btn btn-primary w-100">
-                            @(game.Type == GameType.Browser ? "Играть" : "Скачать")
+                            Подробнее
                         </NavLink>
                     </div>
                 </div>
@@ -58,10 +58,10 @@
 </div>
 
 @code {
-    private List<Game>? games;
+    private List<Game>? _games;
 
     protected override async Task OnInitializedAsync()
     {
-        games = await GameService.GetAllGames();
+        _games = await GameService.GetAllGames();
     }
 }

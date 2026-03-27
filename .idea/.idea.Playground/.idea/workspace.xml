@@ -8,7 +8,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="351bcd50-e517-4954-8749-3e2ca6097b8f" name="Changes" comment="" />
+    <list default="true" id="351bcd50-e517-4954-8749-3e2ca6097b8f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Playground/.idea/dataSources/3a8fdcd0-d340-458f-bf04-15d7c82a5687.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Playground/.idea/dataSources/3a8fdcd0-d340-458f-bf04-15d7c82a5687.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Playground/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Playground/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground.sln.DotSettings.user" beforeDir="false" afterPath="$PROJECT_DIR$/Playground.sln.DotSettings.user" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/Components/Layout/MainLayout.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Playground/Components/Layout/MainLayout.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/Components/Layout/NavMenu.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Playground/Components/Layout/NavMenu.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/Components/Pages/GameDetail.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Playground/Components/Pages/GameDetail.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/Components/Pages/Games.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Playground/Components/Pages/Games.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/Components/Pages/Home.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Playground/Components/Pages/Home.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/Components/Pages/MyGames.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Playground/Components/Pages/MyGames.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/Components/Pages/UploadGame.razor" beforeDir="false" afterPath="$PROJECT_DIR$/Playground/Components/Pages/UploadGame.razor" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/Components/Pages/Weather.razor" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/Models/Game.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Playground/Models/Game.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Playground/playground.db" beforeDir="false" afterPath="$PROJECT_DIR$/Playground/playground.db" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,21 +35,20 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "MaGNeT49"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;MaGNeT49&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/MaGNeT49/Playground.git",
-    "accountId": "394f420e-2c08-4da7-865d-42be26743ac8"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/MaGNeT49/Playground.git&quot;,
+    &quot;accountId&quot;: &quot;394f420e-2c08-4da7-865d-42be26743ac8&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/11ed3c8d1f87b6811c95853d59dd96eb6ce6cc32c193bb21bf5ad7eb9e3132b/Debugger.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eddc51a49dddbdbde4ba2ca25b90ace5a2b5c63fd7d9ea946adb53ab61da735/AuthenticationStateProvider.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/327f875fd92c358a2c6b3c48cc81b288070ecb997371cd17419f80a482a617/LayoutComponentBase.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Playground/Components/App.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Playground/Components/Pages/GameDetail.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Playground/Components/Pages/Games.razor" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -55,33 +68,33 @@
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="Toolset" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="3BU4CjkC78g9FAPJc3wdTi04dru" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Playground: http.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Playground: http.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Playground: http">
     <configuration name="Playground: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Playground/Playground.csproj" />
@@ -124,6 +137,8 @@
       <option name="presentableId" value="Default" />
       <updated>1774530191159</updated>
       <workItem from="1774530192856" duration="27155000" />
+      <workItem from="1774560531035" duration="167000" />
+      <workItem from="1774601447122" duration="2869000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <option name="closed" value="true" />

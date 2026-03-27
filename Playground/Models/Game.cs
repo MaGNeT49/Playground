@@ -1,5 +1,3 @@
-using Playground.Data;
-
 namespace Playground.Models;
 
 public class Game

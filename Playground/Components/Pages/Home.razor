@@ -13,14 +13,14 @@
 
 <h2>Популярные игры</h2>
 <div class="row row-cols-1 row-cols-md-3 g-4">
-    @foreach (var game in popularGames)
+    @foreach (var game in _popularGames)
     {
         <div class="col">
             <div class="card game-card h-100">
                 <img src="@game.CoverUrl" class="card-img-top" alt="@game.Title">
                 <div class="card-body">
                     <h5 class="card-title">@game.Title</h5>
-                    <p class="card-text">@game.Author</p>
+                    <p class="card-text">Автор: @game.Author</p>
                     <NavLink href="@($"/game/{game.Id}")" class="btn btn-primary stretched-link">Подробнее</NavLink>
                 </div>
             </div>
@@ -29,11 +29,11 @@
 </div>
 
 @code {
-    private List<Game> popularGames = new();
+    private List<Game> _popularGames = new();
 
     protected override async Task OnInitializedAsync()
     {
         var allGames = await GameService.GetAllGames();
-        popularGames = allGames.Take(3).ToList();
+        _popularGames = allGames.Take(3).ToList();
     }
 }

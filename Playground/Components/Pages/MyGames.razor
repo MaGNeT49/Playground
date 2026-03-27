@@ -6,17 +6,16 @@
 @using Playground.Services
 @inject GameService GameService
 @inject AuthenticationStateProvider AuthProvider
-@inject IJSRuntime JSRuntime
 
 <PageTitle>Мои игры</PageTitle>
 
 <h1>Мои игры</h1>
 
-@if (games == null)
+@if (_games == null)
 {
     <div class="spinner-border"></div>
 }
-else if (!games.Any())
+else if (!_games.Any())
 {
     <p>Вы ещё не загрузили ни одной игры.</p>
     <a href="/upload" class="btn btn-primary">Загрузить игру</a>
@@ -24,7 +23,7 @@ else if (!games.Any())
 else
 {
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var game in games)
+        @foreach (var game in _games)
         {
             <div class="col">
                 <div class="card game-card h-100">
@@ -61,8 +60,8 @@ else
 }
 
 @code {
-    private List<Game>? games;
-    private int userId;
+    private List<Game>? _games;
+    private int _userId;
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,12 +71,12 @@ else
 
         if (userIdClaim != null)
         {
-            userId = int.Parse(userIdClaim.Value);
-            games = await GameService.GetGamesByUserId(userId);
+            _userId = int.Parse(userIdClaim.Value);
+            _games = await GameService.GetGamesByUserId(_userId);
         }
         else
         {
-            games = new List<Game>();
+            _games = new List<Game>();
         }
     }
 }

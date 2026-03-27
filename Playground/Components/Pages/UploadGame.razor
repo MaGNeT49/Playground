@@ -13,31 +13,31 @@
 
 <h1>Загрузить новую игру</h1>
 
-<EditForm Model="@newGame" OnValidSubmit="@HandleValidSubmit">
+<EditForm Model="@_newGame" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary class="alert alert-danger" />
 
     <div class="mb-3">
         <label for="title" class="form-label">Название игры</label>
-        <InputText id="title" class="form-control" @bind-Value="newGame.Title" />
-        <ValidationMessage For="@(() => newGame.Title)" />
+        <InputText id="title" class="form-control" @bind-Value="_newGame.Title" />
+        <ValidationMessage For="@(() => _newGame.Title)" />
     </div>
 
     <div class="mb-3">
         <label for="author" class="form-label">Автор</label>
-        <InputText id="author" class="form-control" @bind-Value="newGame.Author" />
-        <ValidationMessage For="@(() => newGame.Author)" />
+        <InputText id="author" class="form-control" @bind-Value="_newGame.Author" />
+        <ValidationMessage For="@(() => _newGame.Author)" />
     </div>
 
     <div class="mb-3">
         <label for="description" class="form-label">Описание</label>
-        <InputTextArea id="description" class="form-control" rows="5" @bind-Value="newGame.Description" />
-        <ValidationMessage For="@(() => newGame.Description)" />
+        <InputTextArea id="description" class="form-control" rows="5" @bind-Value="_newGame.Description" />
+        <ValidationMessage For="@(() => _newGame.Description)" />
     </div>
 
     <div class="mb-3">
         <label for="type" class="form-label">Тип игры</label>
-        <InputSelect id="type" class="form-select" @bind-Value="newGame.Type">
+        <InputSelect id="type" class="form-select" @bind-Value="_newGame.Type">
             <option value="@GameType.Browser">Браузерная</option>
             <option value="@GameType.Build">Билд (скачиваемый)</option>
         </InputSelect>
@@ -45,32 +45,32 @@
 
     <div class="mb-3">
         <label for="url" class="form-label">
-            @(newGame.Type == GameType.Browser ? "URL для iframe" : "Ссылка на скачивание")
+            @(_newGame.Type == GameType.Browser ? "URL для iframe" : "Ссылка на скачивание")
         </label>
-        <InputText id="url" class="form-control" @bind-Value="gameUrl" />
+        <InputText id="url" class="form-control" @bind-Value="_gameUrl" />
         <div class="form-text">
-            @(newGame.Type == GameType.Browser ? "Введите URL, где размещена игра (WebGL/HTML)" : "Прямая ссылка на ZIP-архив")
+            @(_newGame.Type == GameType.Browser ? "Введите URL, где размещена игра (WebGL/HTML)" : "Прямая ссылка на ZIP-архив")
         </div>
     </div>
 
     <div class="mb-3">
         <label for="cover" class="form-label">URL обложки</label>
-        <InputText id="cover" class="form-control" @bind-Value="newGame.CoverUrl" />
+        <InputText id="cover" class="form-control" @bind-Value="_newGame.CoverUrl" />
     </div>
 
     <div class="mb-3">
         <label for="tags" class="form-label">Теги (через запятую)</label>
-        <InputText id="tags" class="form-control" @bind-Value="tagsInput" />
+        <InputText id="tags" class="form-control" @bind-Value="_tagsInput" />
     </div>
 
     <button type="submit" class="btn btn-primary">Загрузить</button>
 </EditForm>
 
 @code {
-    private Game newGame = new();
-    private string gameUrl = "";
-    private string tagsInput = "";
-    private int userId;
+    private Game _newGame = new();
+    private string _gameUrl = "";
+    private string _tagsInput = "";
+    private int _userId;
 
     protected override async Task OnInitializedAsync()
     {
@@ -79,23 +79,23 @@
         var userIdClaim = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
         if (userIdClaim != null)
         {
-            userId = int.Parse(userIdClaim.Value);
+            _userId = int.Parse(userIdClaim.Value);
         }
     }
 
     private async Task HandleValidSubmit()
     {
         // заполнение полей newGame
-        if (newGame.Type == GameType.Browser)
-            newGame.PlayUrl = gameUrl;
+        if (_newGame.Type == GameType.Browser)
+            _newGame.PlayUrl = _gameUrl;
         else
-            newGame.DownloadUrl = gameUrl;
+            _newGame.DownloadUrl = _gameUrl;
         
-        newGame.Tags = tagsInput.Split(',', StringSplitOptions.RemoveEmptyEntries)
+        _newGame.Tags = _tagsInput.Split(',', StringSplitOptions.RemoveEmptyEntries)
                                  .Select(t => t.Trim())
                                  .ToList();
 
-        await GameService.AddGame(newGame, userId);
+        await GameService.AddGame(_newGame, _userId);
         Navigation.NavigateTo("/my-games");
     }
 }

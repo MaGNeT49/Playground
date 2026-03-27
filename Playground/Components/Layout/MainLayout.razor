@@ -1,23 +1,22 @@
 ﻿@inherits LayoutComponentBase
 @using Microsoft.AspNetCore.Components.Authorization
 @inject AuthenticationStateProvider AuthenticationStateProvider
-@inject NavigationManager Navigation
 
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
-    <main>
+    <main class="d-flex flex-column flex-grow-1">
         <div class="top-row px-4">
             <div class="search-bar">
                 <i class="bi bi-search"></i>
                 <input type="text" placeholder="Поиск игр..." />
             </div>
             <div class="user-area">
-                @if (isAuthenticated)
+                @if (_isAuthenticated)
                 {
-                    <span class="text-light me-2">Привет, @userName!</span>
+                    <span class="text-light pt-1">Привет, @_userName!</span>
                     <a href="Account/Logout" class="btn btn-outline-light btn-sm">Выйти</a>
                 }
                 else
@@ -28,11 +27,11 @@
             </div>
         </div>
 
-        <article class="content px-4">
+        <article class="content px-4 flex-grow-1">
             @Body
         </article>
 
-        <footer class="footer fixed-bottom mt-auto py-3 text-center">
+        <footer class="footer mt-3 py-3 text-center">
             <div class="container">
                 <span class="text-white font-monospace">© 2026 Playground — площадка для игр</span>
             </div>
@@ -47,14 +46,14 @@
 </div>
 
 @code {
-    private bool isAuthenticated;
-    private string? userName;
+    private bool _isAuthenticated;
+    private string? _userName;
 
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
-        isAuthenticated = user.Identity?.IsAuthenticated ?? false;
-        userName = user.Identity?.Name;
+        _isAuthenticated = user.Identity?.IsAuthenticated ?? false;
+        _userName = user.Identity?.Name;
     }
 }
